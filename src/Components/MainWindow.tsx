@@ -7,6 +7,7 @@ import { AutoScrollContext } from '../AutoscrollContext';
 import PDFWindow from './PDFWindow';
 import ImageWindow from './ImageWindow';
 import TextWindow from './TextWindow';
+import { SCROLL_SPEED_MAX, SCROLL_SPEED_MIN } from '../../shared/const/const';
 
 const MainWindow = () => {
   const file = useContext(FilesContext).currentFile;
@@ -30,7 +31,16 @@ const MainWindow = () => {
       const currentTime = performance.now();
       const elapsedTime = currentTime - lastTime;
 
-      if (elapsedTime > 100 - scrollSpeed) {
+      const normalized = (scrollSpeed - SCROLL_SPEED_MIN) / (SCROLL_SPEED_MAX - SCROLL_SPEED_MIN);
+
+      // smoothstep
+      const smooth = 3 * normalized ** 2 - 2 * normalized ** 3;
+
+      const minInterval = 10;
+      const maxInterval = 100;
+      const interval = maxInterval - (maxInterval - minInterval) * smooth;
+
+      if (elapsedTime > interval) {
         container.scrollBy(0, 1);
         lastTime = currentTime;
       }
