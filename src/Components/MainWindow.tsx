@@ -8,6 +8,9 @@ import PDFWindow from './PDFWindow';
 import ImageWindow from './ImageWindow';
 import TextWindow from './TextWindow';
 
+const minDelay = 2;
+const maxDelay = 100;
+
 const MainWindow = () => {
   const file = useContext(FilesContext).currentFile;
   const { isPlaying, setIsPlaying, containerRef } = useContext(AutoScrollContext);
@@ -30,7 +33,11 @@ const MainWindow = () => {
       const currentTime = performance.now();
       const elapsedTime = currentTime - lastTime;
 
-      if (elapsedTime > 100 - scrollSpeed) {
+      const t = scrollSpeed / 100;
+
+      const delay = maxDelay - Math.pow(t, 0.25) * (maxDelay - minDelay);
+
+      if (elapsedTime > delay) {
         container.scrollBy(0, 1);
         lastTime = currentTime;
       }
@@ -58,8 +65,8 @@ const MainWindow = () => {
   //if .pdf return <PDFWindow />
   if (!file) {
     return (
-      <div className='w-full h-full bg-slate-400 flex flex-row items-center justify-center'>
-        <h1 className='text-slate-600 text-2xl font-thin tracking-tight'>No file selected</h1>
+      <div className="w-full h-full bg-slate-400 flex flex-row items-center justify-center">
+        <h1 className="text-slate-600 text-2xl font-thin tracking-tight">No file selected</h1>
       </div>
     );
   } else if (file && file.type === 'application/pdf') {
