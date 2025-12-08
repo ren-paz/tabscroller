@@ -19,7 +19,7 @@
     "guitar tabulature"
   ],
   "repository": {
-    "url": "https://github.com/reallacuni/tabscroller.git"
+    "url": "https://github.com/ren-paz/tabscroller.git"
   },
   "scripts": {
     "dev": "concurrently \"yarn dev:vite\" \" yarn dev:electron\"",
