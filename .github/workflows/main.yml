@@ -32,7 +32,7 @@ jobs:
           run: npm run dist:win
           
         - name: Archive build artifacts
-          uses: actions/upload-artifact@v2
+          uses: actions/upload-artifact@v4
           with:
             name: dist-win
             path: dist/*.exe  
@@ -59,7 +59,7 @@ jobs:
           run: npm run dist:mac
   
         - name: Archive build artifacts
-          uses: actions/upload-artifact@v2
+          uses: actions/upload-artifact@v4
           with:
             name: dist-mac
             path: |
@@ -124,13 +124,13 @@ jobs:
       #     path: dist-linux
               
       - name: Download mac artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: dist-mac
           path: dist-mac    
           
       - name: Download windows artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: dist-win
           path: dist-win   
